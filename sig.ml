@@ -14,6 +14,9 @@ sig
   val getLabel : 'a value -> 'a
   val addSucc : 'a value -> key -> 'a value
   val removeSucc : 'a value -> key -> 'a value
+  val getSucc : 'a value -> key list
+  val iterSucc : ( key -> unit ) -> 'a value -> unit 
+  val foldSucc : ( key -> 'b -> 'b ) -> 'a value -> 'b -> 'b 
 end
 
 module type L =

@@ -65,6 +65,18 @@ struct
     let v = find graph key in
     G.add key (Vertex.setLabel v label) graph
 
+  (* map sur le graphe *)
+  let mapVertex f graph =
+    G.map f graph
+      
+  (* folder *)
+  let foldVertex f graph =
+    G.fold f graph
+      
+  (* iter vertex *)
+  let iterVertex f graph =
+    G.iter f graph
+
 end
 
 
@@ -90,5 +102,15 @@ struct
   let removeSucc value dst =
     let s = value.adjList in
     {value with adjList = (S.remove dst s)}
+
+  (* renvoit la liste des successeurs *)
+  let getSucc value = S.elements value.adjList
+
+  (* itère sur les clés des successeurs *)
+  let iterSucc f value = S.iter f value.adjList
+
+  (* fold sur les clés des successeurs, dans l'ordre croissant *)
+  let foldSucc f value foo = S.fold f value.adjList foo
+
 end
 
