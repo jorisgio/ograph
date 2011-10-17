@@ -1,0 +1,6 @@
+#ignore les fichiers temporaires
+*~
+#ignore les copies de sauvegardes de emacs :
+\#*\#
+#ignore les bytecodes
+*.cm[io]
