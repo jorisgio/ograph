@@ -79,7 +79,6 @@ struct
 
 end
 
-
 (* implémentation de VERT pour un graphe étiqueté *)
 module LabeledVertex = functor (O : Sig.ORDERED) ->
 struct

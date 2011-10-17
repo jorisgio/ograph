@@ -4,8 +4,9 @@ module  Noeud = struct
   let compare = Pervasives.compare
 end
 
-module Graphe = Graph.MakeLabeled (Noeud)
-  
+module Graphe = Graph.MakeLabeledGraph (Noeud)
+module Vertex = Graph.MakeLabeledVertex (Noeud)  
+
 let rec construit taille acc count = 
   match count with 
   | k when k = taille -> acc
@@ -16,5 +17,8 @@ let graphe = construit 200 ( Graphe.empty ) 0
 let graphe2 = Graphe.setLabel graphe (100+1) 42
 
 let label = Graphe.getLabel graphe2 101
+
+let graphe3 = Graphe.mapVertex (fun x -> Vertex.addSucc x 1) graphe2
+
 
 let () = Printf.printf "%d\n" label

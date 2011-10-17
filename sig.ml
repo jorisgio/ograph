@@ -22,6 +22,7 @@ end
 module type L =
 sig
   type key 
+  type 'a value 
   type 'a t
   exception Vertex_missing of key
   val empty : 'a t
@@ -32,5 +33,9 @@ sig
   val addEdge : 'a t -> key -> key -> 'a-> 'a t
   val getLabel : 'a t -> key -> 'a
   val setLabel : 'a t -> key -> 'a -> 'a t
+  val mapVertex : ( 'a value -> 'b value) -> 'a t -> 'b t
+  val iterVertex : ( key -> 'a value -> unit) -> 'a t -> unit
+  val foldVertex : ( key -> 'a value -> 'b -> 'b) -> 'a t -> 'b -> 'b
+  val find : 'a t -> key -> 'a value
 end
     
