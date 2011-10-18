@@ -5,7 +5,7 @@ module  Noeud = struct
 end
 
 module Graphe = Graph.MakeLabeledGraph (Noeud)
-module Vertex = Graph.MakeLabeledVertex (Noeud)  
+module Vertex = Graphe.Vertex  
 
 let rec construit taille acc count = 
   match count with 

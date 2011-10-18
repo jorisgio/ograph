@@ -1,6 +1,7 @@
 module ConcreteLabeled (O :Sig.ORDERED) = 
 struct
-  include Concrete.Graph ( Concrete.LabeledVertex (O) )
+  module Vertex = Concrete.LabeledVertex (O) 
+  include Concrete.Graph (Vertex)
   let addVertex = __addVertex
   let addEdge = __addEdge
 end
@@ -11,5 +12,3 @@ module type L = Sig.L
 module MakeLabeledGraph ( O : Ordered) = 
   ( ConcreteLabeled(O) : (L with type key = O.t))
 
-module MakeLabeledVertex ( O : Ordered) =
-  (Concrete.LabeledVertex (O) : ( Sig.VERT with type key = O.t))
