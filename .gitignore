@@ -4,3 +4,11 @@
 \#*\#
 #ignore les bytecodes
 *.cm[io]
+
+#ignore les fichiers de doc
+*.html
+*.css
+#ignore les binaires
+*.out
+#ignore les annot
+*.annot
