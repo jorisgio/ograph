@@ -118,3 +118,26 @@ struct
     G.add key (Vertex.setLabel v label) graph
 
 end
+
+
+module UnlabeledVertex ( O : Sig.ORDERED) = 
+struct
+  type key = O.t
+  module S = Set.Make(O)
+  type 'a value = S.t
+      
+  let compare = O.compare
+  let empty _ = S.empty
+    
+  let setLabel _ _ = ()
+  let getLabel _ = ()
+    
+  let addSucc vert succ =  S.add succ vert
+  let removeSucc vert succ = S.remove succ vert
+
+  let getSucc vert = S.elements vert
+
+  let iterSucc  = S.iter
+  let foldSucc = S.fold 
+end
+
