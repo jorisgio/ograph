@@ -2,11 +2,17 @@
 
 (** ordre total sur t, utilisé pour indexer le graphe et type d'étiquettes *)
 module type VERTEX = sig
+
+  (** Type d'index des noeuds du graphe *)
   type t
-    
+
   (** compare deux valeurs {b e1} et {b e2}, renvoit un entier < 0 si {b e1} < {b e2}, nul si égalité et > 0 si {b e1} > {b e2} *)
   val compare : t -> t -> int
+
+  (** type d'étiquette *)
   type label 
+
+  (** l'étiquette {i vide}, c'est à dire ajoutée à un noeud crée *)
   val empty : label
 end 
 
@@ -49,19 +55,18 @@ sig
   val foldSucc : ( key -> 'b -> 'b ) -> value -> 'b -> 'b 
 end
 
-(** Sigature d'un graphe étiquetté *)
-module type L =
+(** Sigature minimale d'un graphe *)
+module type G =
 sig
   (** Type des clés indexant les noeuds *)
   type key
+
   (** Type d'un noeud *)
   type value
-  (** type d'étiquette du graphe *)
-  type label 
-  (** type abstrait d'un graphe *)
+
+  (** type abstrait du graphe *)
   type t
-  (** Réunit les primitives sur les noeuds *)
-  module Vertex : (VERT with type key = key and type  value = value and type label = label)
+
   (** Renvoyée quand le noeud recherché est manquant *)
   exception Vertex_missing of key
       
@@ -95,17 +100,6 @@ sig
       @param label étiquette d'un noeud éventuellement crée*)
   val addEdge : t -> key -> key -> t
 
-  (** Renvoit l'étiquette d'un noeud 
-      @param g graphe
-      @param key noeud *)
-  val getLabel : t -> key -> label
-
-  (** Définit l'étiquette d'un noeud 
-      @param g graphe
-      @param key noeud 
-      @param label étiquette*)
-  val setLabel : t -> key -> label -> t
-
   (** Map sur les noeuds *)
   val mapVertex : ( value -> value) -> t ->  t
   val iterVertex : ( key -> value -> unit) ->  t -> unit
@@ -117,3 +111,24 @@ sig
   val find :  t -> key -> value
 end
     
+(** Signature d'un graphe étiquetté *)
+module type L = sig
+  include(G)
+
+  (** type d'étiquette du graphe *)
+  type label
+
+  (** Réunit les primitives sur les noeuds *)
+  module Vertex : (VERT with type key = key and type  value = value and type label = label)
+
+  (** Renvoit l'étiquette d'un noeud 
+      @param g graphe
+      @param key noeud *)
+  val getLabel : t -> key -> label
+
+  (** Définit l'étiquette d'un noeud 
+      @param g graphe
+      @param key noeud 
+      @param label étiquette*)
+  val setLabel : t -> key -> label -> t
+end
