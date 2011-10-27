@@ -2,6 +2,8 @@
 module  Noeud = struct
   type t = int
   let compare = Pervasives.compare
+  type label = int
+  let empty = 0
 end
 
 module Graphe = Graph.MakeLabeledGraph (Noeud)
@@ -10,7 +12,7 @@ module Vertex = Graphe.Vertex
 let rec construit taille acc count = 
   match count with 
   | k when k = taille -> acc
-  | n -> construit taille (Graphe.addVertex acc n 0) (n+1)
+  | n -> construit taille (Graphe.addVertex acc n ) (n+1)
 
 let graphe = construit 200 ( Graphe.empty ) 0
 

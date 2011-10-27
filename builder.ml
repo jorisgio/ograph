@@ -1,6 +1,7 @@
 
-module type Ordered = Sig.ORDERED
+module type Vertex = Sig.VERTEX
 module type L = Sig.L
 
-module MakeLabeledGraph ( O : Ordered) = 
-  ( Concrete.LabeledGraph(O) : (L with type key = O.t))
+module MakeLabeledGraph ( V : Vertex) = 
+  ( Concrete.LabeledGraph(V) : (L with type key = V.t and type label = V.label))
+

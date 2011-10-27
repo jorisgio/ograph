@@ -9,7 +9,7 @@ struct
     
   (*type d'une clée de la map c'est aussi les index qui identifient les noeuds extèrieurement *)
   type key = Vertex.key
-      
+
   exception Vertex_missing of key
 
   let empty = G.empty
@@ -20,7 +20,19 @@ struct
     try
       G.find key graph 
     with Not_found -> raise (Vertex_missing key) 
-    
+
+  let addVertex graph key =
+    if mem graph key then
+      graph
+    else
+      G.add key (Vertex.empty) graph
+	
+  (* Ajoute une branche entre src et dst *)
+  let addEdge graph  src dst =
+    let g = addVertex graph src in
+    let g2 = addVertex g dst in
+    let value = find g2 src in
+    G.add src (Vertex.addSucc value dst) g2    
 
   (*supprime le noeud indexé par "key"*)
   let removeVertex graph key =
@@ -53,17 +65,17 @@ struct
 end
 
 (* implémentation de VERT pour un graphe étiqueté *)
-module LabeledVertex = functor (O : Sig.ORDERED) ->
+module LabeledVertex = functor (V : Sig.VERTEX) ->
 struct
-  type key = O.t
+  type key = V.t
+  type label = V.label
   (* Module d'ensemble de clé, pour la liste d'adjacence *)
-  module S = Set.Make(O)
-
-  type ('a) value =  { label : 'a ; adjList : S.t }
+  module S = Set.Make(V)
+  type value =  { label : label ; adjList : S.t }
       
-  let empty lab = {label = lab ; adjList = S.empty }
+  let empty = {label = V.empty; adjList = S.empty }
 
-  let compare = O.compare
+  let compare = V.compare
   let setLabel value lab = {value with label = lab }
   let getLabel value = value.label
 
@@ -86,26 +98,13 @@ struct
 
 end
 
-module LabeledGraph (O :Sig.ORDERED) =
+module LabeledGraph (V :Sig.VERTEX) =
 struct
-  module Vertex = LabeledVertex (O)
-  type  'a value = 'a Vertex.value
+  module Vertex = LabeledVertex (V)
+  type   value =  Vertex.value
+  type label = Vertex.label
   include Graph (Vertex)
-  type 'a t = ('a  value) G.t
-
-  (*ajoute le noeud indexé par "key" de meta-données vides au graph*)
-  let addVertex graph key label =
-    if mem graph key then
-      graph
-    else
-      G.add key (Vertex.empty label ) graph
-	
-  (* Ajoute une branche entre src et dst *)
-  let addEdge graph  src dst label =
-    let g = addVertex graph src label in
-    let g2 = addVertex g dst label in
-    let value = find g2 src in
-    G.add src (Vertex.addSucc value dst) g2
+  type t = (value) G.t
 
  (*renvoit l'étiquette de key, éventuellement () *)
   let getLabel graph key =
@@ -119,7 +118,7 @@ struct
 
 end
 
-
+(* Code Outdated
 module UnlabeledVertex ( O : Sig.ORDERED) = 
 struct
   type key = O.t
@@ -141,3 +140,4 @@ struct
   let foldSucc = S.fold 
 end
 
+*)
