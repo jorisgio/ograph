@@ -18,6 +18,10 @@ struct
 
   (** Le graphe vide *)
   let empty = G.empty
+
+  (** Renvoit le nombre de noeuds dans le graphe
+      @param graphe Le graphe *)
+  let size graphe = G.cardinal graphe
     
   (** Cherche le noeud key dans le graphe 
     @param graph Un graphe

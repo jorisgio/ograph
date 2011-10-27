@@ -2,8 +2,8 @@ CC=ocamlc -c
 LINK=ocamlc -pack
 LIB=graph.cma
 CMI=sig.cmi
-CMO=concrete.cmo builder.cmo
-DOC=sig.mli builder.ml concrete.ml
+CMO=concrete.cmo builder.cmo coloring.cmo
+DOC=sig.mli builder.ml concrete.ml coloring.ml
 FLAGS=
 
 all: $(CMI) $(CMO)	

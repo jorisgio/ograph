@@ -6,8 +6,14 @@ module  Noeud = struct
   let empty = 0
 end
 
-module Graphe = Graph.MakeLabeledGraph (Noeud)
+module Couleur = struct
+  type t = bool
+  let empty = false
+end
+
+module Graphe = Builder.MakeLabeledGraph (Noeud)
 module Vertex = Graphe.Vertex  
+module Colore = Coloring.MakeColoredGraph(Graphe)(Couleur)
 
 let rec construit taille acc count = 
   match count with 
@@ -22,5 +28,13 @@ let label = Graphe.getLabel graphe2 101
 
 let graphe3 = Graphe.mapVertex (fun x -> Vertex.addSucc x 1) graphe2
 
+let graphe3 = Colore.colorGraph graphe3 
 
-let () = Printf.printf "%d\n" label
+let graphe3 = Colore.addVertex graphe3 202
+let graphe3 = Colore.addEdge graphe3 202 42
+let graphe3 = Colore.setColor graphe3 42 true
+let couleur = Colore.getColor graphe3 42
+
+let col = string_of_bool couleur
+
+let () = Printf.printf "%d %s\n" (label) col

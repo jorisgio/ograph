@@ -16,6 +16,14 @@ module type VERTEX = sig
   val empty : label
 end 
 
+(** Des couleurs pour un graphe *)
+module type COLOR = sig
+  (** type de couleur *)
+  type t
+  (** couleur vide *)
+  val empty : t
+end
+
 (** Signature d'un noeud étiqueté *)
 module type VERT =
 sig
@@ -73,6 +81,9 @@ sig
   (** le graphe vide *)
   val empty : t
 
+  (** Renvoit le nombre de noeuds du graphe *)
+  val size : t -> int 
+
   (**  cherche un noeud  dans le graphe, renvoit True si existant *) 
   val mem : t -> key ->  bool
 
@@ -96,8 +107,7 @@ sig
   (** Ajoute une branche au graphe. Si un noeud n'existe pas, il est créé 
       @param g graphe
       @param src neoud source
-      @param dst noeud destination
-      @param label étiquette d'un noeud éventuellement crée*)
+      @param dst noeud destination *)
   val addEdge : t -> key -> key -> t
 
   (** Map sur les noeuds *)
