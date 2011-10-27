@@ -1,0 +1,9 @@
+Implémentation simple de graphes orientés.
+
+*** Utilisation ***
+
+make 
+construit un graph.cma contenant la bibliothèque sous forme de bytecode caml.
+
+make doc 
+génère la documentation html et l'installe dans le répertoire doc.
