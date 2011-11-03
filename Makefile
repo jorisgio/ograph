@@ -1,5 +1,5 @@
 CC=ocamlc -c
-LINK=ocamlc -pack
+LINK=ocamlc -a -linkall -annot 
 LIB=graph.cma
 CMI=sig.cmi
 CMO=concrete.cmo builder.cmo coloring.cmo
@@ -7,7 +7,7 @@ DOC=sig.mli builder.ml concrete.ml coloring.ml
 FLAGS=
 
 all: $(CMI) $(CMO)	
-	$(LINK) $(FLAGS) -o $(LIB) $(CMI) $(CMO)
+	$(LINK) $(FLAGS) -o $(LIB)  $(CMO)
 
 %cmi: %mli
 	$(CC) $(FLAGS)  $<
