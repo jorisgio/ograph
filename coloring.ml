@@ -66,4 +66,6 @@ module MakeColoredGraph( Graph : Sig.G) (C : Sig.COLOR) = struct
     Hashtbl.replace g.colors key col;
     g
 
+  let find g key = find g.graph key;
+
 end
