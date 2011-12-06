@@ -92,6 +92,8 @@ sig
       @param key index du noeud *)
   val addVertex : t -> key -> t 
 
+(** Modifie la valeur du noeud *)
+  val setVertex : t -> key -> value -> t
     (** Supprime un noeud d'un graphe 
 	@param g graphe
 	@param  key index du noeud *)

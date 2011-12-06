@@ -37,6 +37,10 @@ struct
       G.find key graph 
     with Not_found -> raise (Vertex_missing key) 
 
+  (** définit les propriété du noeud *)
+  let setVertex graph key value =
+ 	G.add key value graph
+
   (** Ajoute un noeud au graphe 
     @param graph le graphe
     @param key index du noeud ajouté *)
